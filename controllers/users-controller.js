@@ -1,17 +1,6 @@
-const { uuid } = require("uuidv4");
 const User = require("../models/users");
 const HttpError = require("../models/http-error");
 const { validationResult } = require("express-validator");
-const { find } = require("../models/users");
-
-const DUMMY_USERS = [
-  {
-    id: "u1",
-    name: "Oumaima sb",
-    email: "test@test.com",
-    password: "testers",
-  },
-];
 
 const getUsers = async (req, res, next) => {
   let users;
@@ -30,7 +19,7 @@ const signup = async (req, res, next) => {
     return next(new HttpError("Invalid inputs passed", 422));
   }
 
-  const { name, email, password, places } = req.body;
+  const { name, email, password } = req.body;
   let existingUser;
   try {
     existingUser = await User.findOne({ email: email });
@@ -49,7 +38,7 @@ const signup = async (req, res, next) => {
     image:
       "https://static.vecteezy.com/ti/vecteur-libre/p1/1993889-belle-femme-latine-avatar-icone-personnage-gratuit-vectoriel.jpg",
     password,
-    places,
+    places: [],
   });
 
   try {
