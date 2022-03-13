@@ -2,8 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const usersRoutes = require("./routes/users-routes");
 const placesRoutes = require("./routes/places-routes");
+const usersRoutes = require("./routes/users-routes");
 const HttpError = require("./models/http-error");
 
 const app = express();
@@ -21,11 +21,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/places", placesRoutes); // => /api/places...
+app.use("/api/places", placesRoutes);
 app.use("/api/users", usersRoutes);
 
 app.use((req, res, next) => {
-  const error = new HttpError("Could not find this route", 404);
+  const error = new HttpError("Could not find this route.", 404);
   throw error;
 });
 
@@ -39,7 +39,8 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    "mongodb+srv://Oumaimasb:Oumaima123<3@cluster0.amgeq.mongodb.net/mern?retryWrites=true&w=majority"
+    "mongodb+srv://Oumaimasb:Oumaima123<3@cluster0.amgeq.mongodb.net/mern?retryWrites=true&w=majority",
+    { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }
   )
   .then(() => {
     app.listen(5000);
